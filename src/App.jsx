@@ -1,51 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { supabase } from "./supabaseClient";
 import "./App.css";
 
 function App() {
   const [search, setSearch] = useState("");
 
-  const students = [
-    {
-      id: 1,
-      name: "Nguyễn Văn An",
-      email: "an@gmail.com",
-      major: "Công nghệ thông tin",
-      className: "DCT23A1",
-      status: "Đang học",
-    },
-    {
-      id: 2,
-      name: "Trần Thị Bình",
-      email: "binh@gmail.com",
-      major: "Công nghệ thông tin",
-      className: "DCT23A2",
-      status: "Đang học",
-    },
-    {
-      id: 3,
-      name: "Lê Văn Cường",
-      email: "cuong@gmail.com",
-      major: "Kỹ thuật phần mềm",
-      className: "DCT23A1",
-      status: "Đang học",
-    },
-    {
-      id: 4,
-      name: "Phạm Thị Dung",
-      email: "dung@gmail.com",
-      major: "Hệ thống thông tin",
-      className: "DCT23A3",
-      status: "Bảo lưu",
-    },
-    {
-      id: 5,
-      name: "Hoàng Văn Minh",
-      email: "minh@gmail.com",
-      major: "Công nghệ thông tin",
-      className: "DCT23A2",
-      status: "Đang học",
-    },
-  ];
+  const [students, setStudents] = useState([]);
+const [loading, setLoading] = useState(true);
+
+const getStudents = async () => {
+  const { data, error } = await supabase
+    .from("students")
+    .select("*")
+    .order("id", { ascending: true });
+
+  if (error) {
+    console.error("Lỗi lấy dữ liệu:", error);
+    return;
+  }
+
+  setStudents(data);
+  setLoading(false);
+};
+
+useEffect(() => {
+  getStudents();
+}, []);
 
   const filteredStudents = students.filter(
     (student) =>
@@ -147,7 +127,7 @@ function App() {
 
                   <td>{student.major}</td>
 
-                  <td>{student.className}</td>
+                  <td>{student.class_name}</td>
 
                   <td>
                     <span
