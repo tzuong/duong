@@ -80,7 +80,7 @@ useEffect(() => {
 
         <div>
 
-          <h1>Quản lý sinh viên của Thuỳ Dương</h1>
+          <h1>Quản lý sinh viên của Thuỳ Dương 10</h1>
 
           <p>Hệ thống quản lý thông tin sinh viên</p>
 
